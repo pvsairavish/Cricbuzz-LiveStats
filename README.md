@@ -1,5 +1,6 @@
 # 🏏 Cricbuzz LiveStats — Real-Time Cricket Intelligence & SQL Analytics
 
+[![Live Demo](https://img.shields.io/badge/Streamlit%20Cloud-Live%20Demo-FF4B4B?logo=streamlit&logoColor=white)](https://cricbuzz-livestats-nrgirqzzdtpaqhnbfabmd3.streamlit.app/)
 ![Python](https://img.shields.io/badge/Python-3.10%2B%20%7C%203.11-3776AB?logo=python&logoColor=white)
 ![Streamlit](https://img.shields.io/badge/Streamlit-1.35%2B-FF4B4B?logo=streamlit&logoColor=white)
 ![Database](https://img.shields.io/badge/Database-SQLite3%20(3NF)-003B57?logo=sqlite&logoColor=white)
@@ -15,10 +16,13 @@
 
 ## 🚀 Live Demo & Quick Access
 
-**Explore the interactive multi-page web application:**
+**Try the live interactive web application:**
 
-👉 **Local URL:** `http://localhost:8501`  
-👉 **Cloud Deployment:** Streamlit Community Cloud / Render ready (`render.yaml` & `Dockerfile` included)
+👉 **Live Application:** [https://cricbuzz-livestats-nrgirqzzdtpaqhnbfabmd3.streamlit.app/](https://cricbuzz-livestats-nrgirqzzdtpaqhnbfabmd3.streamlit.app/)
+
+- 🌐 **Cloud URL:** [cricbuzz-livestats.streamlit.app](https://cricbuzz-livestats-nrgirqzzdtpaqhnbfabmd3.streamlit.app/)
+- 💻 **Local Development URL:** `http://localhost:8501`  
+- 🐳 **Container Deployment:** Ready for Streamlit Cloud, Render, and Docker (`render.yaml` & `Dockerfile` included)
 
 ---
 

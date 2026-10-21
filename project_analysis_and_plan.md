@@ -385,9 +385,3 @@ The "Prompt to be used in Claude" document outlines an **18-phase mentored learn
 
 ---
 
-## ❓ Key Decisions Needed Before Starting
-
-1. **Which database?** — SQLite (simplest), MySQL, or PostgreSQL?
-2. **API Key** — Do you already have a Cricbuzz API key from RapidAPI?
-3. **Deployment target** — Streamlit Cloud, Render, Railway, or local only?
-4. **Approach** — Follow the 18-phase mentored learning path, or build directly?
