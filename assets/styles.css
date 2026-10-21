@@ -1,0 +1,905 @@
+/* ==========================================================================
+   Cricbuzz LiveStats — High-End UI/UX Design System (Inspired by Retail Arcade)
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap');
+
+:root {
+  --bg: #0B1220;
+  --card: #131C2E;
+  --card-2: #182238;
+  --line: #1F2C42;
+  --line-2: #2A3A55;
+  --ink: #E5E7EB;
+  --ink-2: #8A97AB;
+  --ink-3: #64748B;
+  --accent: #008767;          /* Cricbuzz emerald signature */
+  --accent-dim: #005F48;
+  --accent-bright: #10B981;
+  --gold: #E8A33D;
+  --party: #E879F9;
+  --cyan: #00A9B4;
+  --good: #3FB950;
+  --bad: #F0616D;
+  --r: 14px;
+  --r-sm: 9px;
+  --fs-1: 11px;
+  --fs-2: 13px;
+  --fs-3: 15px;
+  --fs-4: 19px;
+  --fs-5: 26px;
+  --fs-6: 34px;
+  --t: 200ms cubic-bezier(.4, 0, .2, 1);
+  --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Base resets & typography */
+html, body, [class*="css"], .stApp {
+  background-color: var(--bg) !important;
+  color: var(--ink) !important;
+  font-family: var(--font) !important;
+  font-size: var(--fs-2) !important;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Remove default Streamlit top padding */
+.main .block-container {
+  padding-top: 1.5rem !important;
+  padding-bottom: 3rem !important;
+  max-width: 1380px !important;
+}
+
+/* Tabular figures */
+.tnum {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* ---------- Top HUD (Heads-Up Display) ---------- */
+.hud {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  background: rgba(11, 18, 32, 0.94);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+  padding: 12px 18px;
+  border-radius: var(--r);
+  margin-bottom: 18px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+.hud-in {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  flex-wrap: wrap;
+}
+.brand {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-right: auto;
+}
+.brand h1 {
+  margin: 0;
+  font-size: var(--fs-4);
+  font-weight: 800;
+  color: #F8FAFC;
+  letter-spacing: -0.02em;
+}
+.brand span {
+  font-size: var(--fs-1);
+  color: var(--ink-3);
+  text-transform: uppercase;
+  letter-spacing: .09em;
+  font-weight: 700;
+}
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 60px;
+}
+.stat b {
+  font-size: var(--fs-4);
+  font-weight: 800;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+.stat i {
+  font-style: normal;
+  font-size: 10px;
+  color: var(--ink-3);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-weight: 700;
+}
+.stat.gold b { color: var(--gold); }
+.stat.fire b { color: var(--party); }
+.stat.green b { color: var(--accent-bright); }
+
+.xp {
+  min-width: 200px;
+}
+.xp-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 5px;
+}
+.xp-top b {
+  font-size: var(--fs-2);
+  font-weight: 700;
+  color: var(--ink);
+}
+.xp-top em {
+  font-style: normal;
+  font-size: 10px;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+}
+.xp-bar {
+  height: 7px;
+  border-radius: 99px;
+  background: var(--line);
+  overflow: hidden;
+}
+.xp-fill {
+  height: 100%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, var(--accent-dim), var(--accent-bright), var(--gold));
+  transition: width 600ms cubic-bezier(.4, 0, .2, 1);
+}
+
+/* ---------- Control Deck (Slicers & Filter Controls) ---------- */
+.deck {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  padding: 16px 20px;
+  margin-bottom: 18px;
+}
+.frow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  align-items: flex-start;
+}
+.fgroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.fgroup > label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .09em;
+  color: var(--ink-3);
+  font-weight: 700;
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 99px;
+  border: 1px solid var(--line-2);
+  background: var(--card-2);
+  color: var(--ink-2);
+  font-size: var(--fs-2);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--t);
+  text-decoration: none !important;
+}
+.chip:hover {
+  border-color: var(--ink-3);
+  color: var(--ink);
+  transform: translateY(-1px);
+}
+.chip.active, .chip[aria-pressed="true"] {
+  background: var(--accent-dim);
+  border-color: var(--accent-bright);
+  color: #fff;
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.3);
+}
+.chip .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex: none;
+}
+
+/* Status Tag (Read-only operational readouts without button affordance) */
+.status-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 11px;
+  border-radius: 99px;
+  border: 1px solid var(--line-2);
+  background: var(--card-2);
+  color: var(--ink-2);
+  font-size: var(--fs-2);
+  font-weight: 600;
+  cursor: default !important;
+  pointer-events: none;
+  user-select: none;
+}
+.status-tag.active {
+  border-color: rgba(16, 185, 129, 0.35);
+  background: rgba(16, 185, 129, 0.08);
+  color: #E2E8F0;
+}
+.status-tag .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex: none;
+}
+.brow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-top: 14px;
+  padding-top: 13px;
+  border-top: 1px solid var(--line);
+}
+.count {
+  margin-left: auto;
+  font-size: var(--fs-2);
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+}
+.count b {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--line-2);
+  background: var(--card-2);
+  color: var(--ink);
+  font-weight: 600;
+  font-size: var(--fs-2);
+  cursor: pointer;
+  transition: all var(--t);
+  text-decoration: none;
+}
+.btn:hover {
+  background: #1E2A42;
+  border-color: var(--ink-3);
+  transform: translateY(-1px);
+}
+.btn:active {
+  transform: translateY(1px);
+}
+.btn.primary {
+  background: var(--accent);
+  border-color: var(--accent-bright);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(0, 135, 103, 0.4);
+}
+.btn.primary:hover {
+  background: var(--accent-bright);
+  color: #0B1220;
+}
+
+/* Streamlit Native Buttons Override */
+div.stButton > button {
+  background: var(--card-2) !important;
+  color: var(--ink) !important;
+  border: 1px solid var(--line-2) !important;
+  border-radius: var(--r-sm) !important;
+  font-weight: 600 !important;
+  font-size: var(--fs-2) !important;
+  padding: 8px 16px !important;
+  transition: all var(--t) !important;
+}
+div.stButton > button:hover {
+  background: #1E2A42 !important;
+  border-color: var(--accent-bright) !important;
+  color: #fff !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3) !important;
+}
+div.stButton > button:active {
+  transform: translateY(1px) !important;
+}
+div.stButton > button[kind="primary"] {
+  background: var(--accent) !important;
+  border-color: var(--accent-bright) !important;
+  color: #fff !important;
+}
+div.stButton > button[kind="primary"]:hover {
+  background: var(--accent-bright) !important;
+  color: #0B1220 !important;
+}
+
+/* Streamlit Pills & Segmented Controls (Retail Arcade Chips) */
+div[data-testid="stPills"] button,
+div[data-testid="stSegmentedControl"] button {
+  background: var(--card-2) !important;
+  color: var(--ink-2) !important;
+  border: 1px solid var(--line-2) !important;
+  border-radius: 99px !important;
+  font-weight: 600 !important;
+  font-size: var(--fs-2) !important;
+  padding: 6px 14px !important;
+  transition: all var(--t) !important;
+}
+
+div[data-testid="stPills"] button:hover,
+div[data-testid="stSegmentedControl"] button:hover {
+  background: #1E2A42 !important;
+  border-color: var(--ink-3) !important;
+  color: #fff !important;
+  transform: translateY(-1px) !important;
+}
+
+div[data-testid="stPills"] button[aria-selected="true"],
+div[data-testid="stSegmentedControl"] button[aria-selected="true"] {
+  background: var(--accent-dim) !important;
+  border-color: var(--accent-bright) !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 14px rgba(16, 185, 129, 0.4) !important;
+}
+
+/* Download Button Styling */
+div.stDownloadButton > button {
+  background: linear-gradient(135deg, #182238, #131C2E) !important;
+  border: 1px solid var(--line-2) !important;
+  color: var(--ink) !important;
+  border-radius: var(--r-sm) !important;
+  font-weight: 600 !important;
+  padding: 8px 16px !important;
+  transition: all var(--t) !important;
+}
+div.stDownloadButton > button:hover {
+  border-color: var(--gold) !important;
+  color: var(--gold) !important;
+  box-shadow: 0 0 12px rgba(232, 163, 61, 0.3) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Plotly Chart Container Card */
+div[data-testid="stPlotlyChart"] {
+  background: var(--card) !important;
+  border: 1px solid var(--line) !important;
+  border-radius: var(--r) !important;
+  padding: 10px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
+  transition: all var(--t) !important;
+  overflow: hidden !important;
+}
+div[data-testid="stPlotlyChart"]:hover {
+  border-color: var(--line-2) !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35) !important;
+}
+
+/* ---------- 6-KPI Ribbon ---------- */
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.kpi {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  padding: 14px 16px;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--t);
+}
+.kpi:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent-bright);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+.kpi .lbl {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .09em;
+  color: var(--ink-3);
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.kpi .val {
+  font-size: var(--fs-5);
+  font-weight: 800;
+  letter-spacing: -.02em;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  color: #F8FAFC;
+}
+.kpi .val.text {
+  font-size: var(--fs-4);
+}
+.kpi .delta {
+  font-size: var(--fs-1);
+  font-weight: 700;
+  margin-top: 5px;
+  font-variant-numeric: tabular-nums;
+}
+.kpi .delta.up { color: var(--good); }
+.kpi .delta.down { color: var(--bad); }
+.kpi .delta.gold { color: var(--gold); }
+.kpi .delta.flat { color: var(--ink-3); }
+
+/* ---------- Cards & Containers ---------- */
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  padding: 18px;
+  margin-bottom: 16px;
+  transition: all var(--t);
+}
+.card:hover {
+  border-color: var(--line-2);
+}
+.card h3 {
+  margin: 0 0 4px;
+  font-size: var(--fs-4);
+  font-weight: 700;
+  color: #F8FAFC;
+  letter-spacing: -.01em;
+}
+.card .sub {
+  margin: 0 0 14px;
+  font-size: var(--fs-1);
+  color: var(--ink-3);
+}
+
+/* 3-column chart grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+/* ---------- Cricket Arcade Module ---------- */
+.arc-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 18px;
+}
+.game {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: all var(--t);
+}
+.game:hover {
+  border-color: var(--accent);
+}
+.game-hd {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.game-hd h3 {
+  margin: 0;
+  font-size: var(--fs-4);
+  font-weight: 800;
+  color: #F8FAFC;
+  letter-spacing: -.02em;
+}
+.game-hd p {
+  margin: 3px 0 0;
+  font-size: var(--fs-1);
+  color: var(--ink-3);
+}
+.pill {
+  margin-left: auto;
+  flex: none;
+  padding: 4px 11px;
+  border-radius: 99px;
+  background: rgba(232, 163, 61, 0.14);
+  border: 1px solid rgba(232, 163, 61, 0.35);
+  color: var(--gold);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .04em;
+  white-space: nowrap;
+}
+.q {
+  font-size: var(--fs-3);
+  font-weight: 600;
+  color: var(--ink);
+  min-height: 44px;
+}
+.q em {
+  font-style: normal;
+  color: var(--accent-bright);
+  font-weight: 700;
+}
+.opts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.opt {
+  padding: 16px 14px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--line-2);
+  background: var(--card-2);
+  font-weight: 700;
+  font-size: var(--fs-3);
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--t);
+  color: var(--ink);
+}
+.opt:hover:not(:disabled) {
+  background: #1E2A42;
+  border-color: var(--accent-bright);
+  transform: translateY(-2px);
+  color: #fff;
+}
+.opt.right {
+  background: rgba(63, 185, 80, 0.16) !important;
+  border-color: var(--good) !important;
+  color: #B7F0BE !important;
+}
+.opt.wrong {
+  background: rgba(240, 97, 109, 0.14) !important;
+  border-color: var(--bad) !important;
+  color: #FFC2C7 !important;
+}
+.opt small {
+  display: block;
+  margin-top: 5px;
+  font-size: var(--fs-1);
+  font-weight: 600;
+  opacity: .85;
+  font-variant-numeric: tabular-nums;
+}
+.verdict {
+  min-height: 38px;
+  font-size: var(--fs-2);
+  font-weight: 600;
+  color: var(--ink-2);
+  border-left: 3px solid var(--line-2);
+  padding-left: 12px;
+}
+.verdict.ok { border-color: var(--good); color: #B7F0BE; }
+.verdict.no { border-color: var(--bad); color: #FFC2C7; }
+
+/* Achievement Badges Matrix */
+.badges {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 14px;
+}
+.badge-card {
+  padding: 14px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--line);
+  background: var(--card-2);
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  opacity: 0.5;
+  transition: all var(--t);
+}
+.badge-card.on {
+  opacity: 1;
+  border-color: var(--gold);
+  background: rgba(232, 163, 61, 0.09);
+  box-shadow: 0 0 16px rgba(232, 163, 61, 0.2);
+}
+.badge-card .ico {
+  width: 34px;
+  height: 34px;
+  flex: none;
+  border-radius: 8px;
+  background: var(--line);
+  display: grid;
+  place-items: center;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--ink-3);
+}
+.badge-card.on .ico {
+  background: rgba(232, 163, 61, 0.25);
+  color: var(--gold);
+}
+.badge-card b {
+  display: block;
+  font-size: var(--fs-2);
+  font-weight: 700;
+  color: var(--ink);
+}
+.badge-card small {
+  display: block;
+  color: var(--ink-3);
+  font-size: var(--fs-1);
+  margin-top: 3px;
+  line-height: 1.35;
+}
+
+/* Pulsing Live Dot */
+.live-pulse {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background-color: var(--accent-bright);
+  box-shadow: 0 0 0 rgba(16, 185, 129, 0.7);
+  animation: pulse 1.8s infinite;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+  70% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+/* ---------- Streamlit Widgets Overrides ---------- */
+/* Inputs */
+.stTextInput input, .stSelectbox select, .stNumberInput input, .stDateInput input, .stTextArea textarea {
+  background-color: var(--card-2) !important;
+  color: var(--ink) !important;
+  border: 1px solid var(--line-2) !important;
+  border-radius: var(--r-sm) !important;
+  font-size: var(--fs-2) !important;
+}
+.stTextInput input:focus, .stSelectbox select:focus, .stNumberInput input:focus, .stTextArea textarea:focus {
+  border-color: var(--accent-bright) !important;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.25) !important;
+}
+
+/* Streamlit Pills arcade styling */
+div[data-testid="stPills"] {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 6px !important;
+  align-items: center !important;
+}
+div[data-testid="stPills"] button,
+div[data-testid="stPills"] [role="button"] {
+  background: var(--card-2) !important;
+  border: 1px solid var(--line-2) !important;
+  color: var(--ink-2) !important;
+  border-radius: 99px !important;
+  padding: 5px 14px !important;
+  font-size: 0.82rem !important;
+  font-weight: 600 !important;
+  transition: all var(--t) !important;
+}
+div[data-testid="stPills"] button:hover,
+div[data-testid="stPills"] [role="button"]:hover {
+  border-color: var(--accent-bright) !important;
+  color: #FFFFFF !important;
+  transform: translateY(-1px) !important;
+}
+div[data-testid="stPills"] button[aria-selected="true"],
+div[data-testid="stPills"] [aria-pressed="true"] {
+  background: var(--accent-dim) !important;
+  border-color: var(--accent-bright) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.35) !important;
+}
+
+/* Streamlit Buttons arcade styling */
+div[data-testid="stButton"] button {
+  background: var(--card-2) !important;
+  border: 1px solid var(--line-2) !important;
+  color: var(--ink-2) !important;
+  border-radius: 99px !important;
+  padding: 6px 14px !important;
+  font-size: 0.84rem !important;
+  font-weight: 700 !important;
+  transition: all var(--t) !important;
+}
+div[data-testid="stButton"] button:hover {
+  border-color: var(--accent-bright) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 0 14px rgba(16, 185, 129, 0.3) !important;
+  transform: translateY(-1px) !important;
+}
+div[data-testid="stButton"] button:active {
+  transform: translateY(0px) !important;
+}
+
+/* Radio buttons styled as segmented pills */
+div[role="radiogroup"] {
+  background: var(--card-2) !important;
+  padding: 4px !important;
+  border-radius: 99px !important;
+  border: 1px solid var(--line-2) !important;
+  display: inline-flex !important;
+  gap: 4px !important;
+}
+div[role="radiogroup"] > label {
+  background: transparent !important;
+  padding: 4px 12px !important;
+  border-radius: 99px !important;
+  margin: 0 !important;
+}
+div[role="radiogroup"] > label:hover {
+  background: #1E2A42 !important;
+}
+
+/* Tabs styling */
+div[data-baseweb="tab-list"] {
+  background: transparent !important;
+  border-bottom: 1px solid var(--line) !important;
+  gap: 8px !important;
+}
+div[data-baseweb="tab"] {
+  background: transparent !important;
+  color: var(--ink-2) !important;
+  border-bottom: 2px solid transparent !important;
+  padding: 10px 18px !important;
+  font-weight: 700 !important;
+  font-size: var(--fs-3) !important;
+}
+div[data-baseweb="tab"][aria-selected="true"] {
+  color: #fff !important;
+  border-bottom-color: var(--accent-bright) !important;
+}
+
+/* Dataframe styling */
+div[data-testid="stDataFrame"] {
+  border: 1px solid var(--line) !important;
+  border-radius: var(--r) !important;
+  overflow: hidden !important;
+  background: var(--card) !important;
+}
+
+/* ---------- PowerBI Studio Executive Sidebar ---------- */
+section[data-testid="stSidebar"] {
+  background-color: #0A0F1D !important;
+  border-right: 1px solid #1E293B !important;
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.45) !important;
+}
+section[data-testid="stSidebar"] > div:first-child {
+  padding-top: 1rem !important;
+  padding-left: 0.85rem !important;
+  padding-right: 0.85rem !important;
+}
+
+/* Hide default plain Streamlit nav links */
+div[data-testid="stSidebarNav"],
+nav[data-testid="stSidebarNav"],
+[data-testid="stSidebarNav"],
+[data-testid="stSidebarNavItems"],
+[data-testid="stSidebarNavSeparator"],
+section[data-testid="stSidebar"] nav {
+  display: none !important;
+  height: 0 !important;
+  max-height: 0 !important;
+  overflow: hidden !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* PowerBI Page Links in Sidebar */
+a[data-testid="stPageLink-NavLink"] {
+  background: #111A2E !important;
+  border: 1px solid #1E2C44 !important;
+  border-left: 3px solid transparent !important;
+  border-radius: 8px !important;
+  padding: 10px 14px !important;
+  margin-bottom: 7px !important;
+  color: #E2E8F0 !important;
+  font-size: 0.86rem !important;
+  font-weight: 600 !important;
+  transition: all var(--t) !important;
+  text-decoration: none !important;
+  display: flex !important;
+  align-items: center !important;
+}
+a[data-testid="stPageLink-NavLink"] p,
+a[data-testid="stPageLink-NavLink"] span {
+  color: #E2E8F0 !important;
+  font-size: 0.86rem !important;
+  font-weight: 600 !important;
+}
+a[data-testid="stPageLink-NavLink"]:hover {
+  border-color: #10B981 !important;
+  border-left: 3px solid #10B981 !important;
+  background: rgba(16, 185, 129, 0.14) !important;
+  transform: translateX(4px) !important;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.22) !important;
+}
+a[data-testid="stPageLink-NavLink"]:hover p,
+a[data-testid="stPageLink-NavLink"]:hover span {
+  color: #FFFFFF !important;
+}
+a[data-testid="stPageLink-NavLink"][aria-current="page"] {
+  border-color: #F2C811 !important;
+  border-left: 3px solid #F2C811 !important;
+  background: linear-gradient(90deg, rgba(242, 200, 17, 0.2) 0%, rgba(242, 200, 17, 0.05) 100%) !important;
+  box-shadow: 0 4px 16px rgba(242, 200, 17, 0.25) !important;
+}
+a[data-testid="stPageLink-NavLink"][aria-current="page"] p,
+a[data-testid="stPageLink-NavLink"][aria-current="page"] span {
+  color: #F8FAFC !important;
+  font-weight: 700 !important;
+}
+
+/* Sidebar audio toggle button */
+button[key="pbi_sidebar_audio_btn"] {
+  background: linear-gradient(135deg, #182238 0%, #1E2D4A 100%) !important;
+  border: 1px solid #334155 !important;
+  border-radius: 8px !important;
+  color: #F8FAFC !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em !important;
+  padding: 8px 14px !important;
+  transition: all var(--t) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+}
+button[key="pbi_sidebar_audio_btn"]:hover {
+  border-color: #F2C811 !important;
+  color: #F2C811 !important;
+  box-shadow: 0 0 14px rgba(242, 200, 17, 0.35) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Audio Synthesizer Engine Helper Iframe (Offscreen, active, non-blocking) */
+div[data-testid="stCustomComponentV1"] {
+  position: fixed !important;
+  top: -500px !important;
+  left: -500px !important;
+  width: 1px !important;
+  height: 1px !important;
+  opacity: 0.001 !important;
+  pointer-events: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--line-2);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ink-3);
+}
+
+@media (max-width: 1100px) {
+  .kpis { grid-template-columns: repeat(3, 1fr); }
+  .grid { grid-template-columns: repeat(2, 1fr); }
+  .badges { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+  .kpis { grid-template-columns: repeat(2, 1fr); }
+  .grid, .arc-grid { grid-template-columns: 1fr; }
+  .badges { grid-template-columns: 1fr; }
+}
